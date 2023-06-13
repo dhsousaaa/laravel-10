@@ -17,7 +17,7 @@ class SupportController extends Controller
     {
         $supports = $this->service->paginate(
             page: $request->get('page') ?? 1,
-            totalPerPage: $request->get('per_page') ?? 1,
+            totalPerPage: $request->get('per_page') ?? 15,
             filter: $request->filter
         );
         
@@ -41,7 +41,7 @@ class SupportController extends Controller
     public function store(StoreUpdateSupport $request, Support $support)
     {
         $this->service->new(CreateSupportDTO::makeFromRequest($request));
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')->with('message', 'Cadastrado com sucesso!');
     }
 
     public function edit(string $id)
@@ -60,7 +60,7 @@ class SupportController extends Controller
             return back();
         }
 
-        return redirect()->route('supports.index');
+        return redirect()->route('supports.index')->with('message', 'Editado com sucesso!');;
     }
 
     public function destroy(string $id)
